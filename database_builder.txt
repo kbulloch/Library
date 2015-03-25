@@ -1,0 +1,9 @@
+CREATE DATABASE library;
+\c library;
+CREATE TABLE books (id serial PRIMARY KEY, title varchar, author varchar);
+CREATE DATABASE library_test WITH TEMPLATE library;
+\c library_test;
+
+
+
+///create other tables
