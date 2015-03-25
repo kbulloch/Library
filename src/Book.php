@@ -81,8 +81,23 @@
             $this->setAuthor($new_author);
         }
 
+        //written in a different way
+        //if there are problems look here
+        static function find($search_id)
+        {
+            $statement = $GLOBALS['DB']->query("SELECT * FROM books WHERE id = {$search_id};");
+            $returned_book = $statement->fetch(PDO::FETCH_ASSOC);
+            $title = $returned_book['title'];
+            $author = $returned_book['author'];
+            $id = $returned_book['id'];
+            $found_book = new Book($title, $author, $id);
+            return $found_book;
+        }
 
-
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM books WHERE id = {$this->getId()};");
+        }
 
 
 

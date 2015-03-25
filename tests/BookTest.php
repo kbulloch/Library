@@ -171,7 +171,7 @@
             $test_book->save();
 
             $new_author = "Francis Bacon";
-            
+
             //Act
             $test_book->updateAuthor($new_author);
 
@@ -180,8 +180,49 @@
             $this->assertEquals($new_author, $result);
         }
 
+        function testFind()
+        {
+            //Arrange
+            $title = "Dungeons and Dragons";
+            $author = "James Brown";
+            $test_book = new Book($title, $author);
+            $test_book->save();
+
+            $title2 = "Antechrist";
+            $author2 = "Amelie Notomb";
+            $test_book2 = new Book($title2, $author2);
+            $test_book2->save();
+
+            //Act
+            $result = Book::find($test_book->getId());
+
+            //Assert
+            $this->assertEquals($test_book, $result);
+
+        }
 
 
+        function testDelete()
+        {
+            //Arrange
+            $title = "Dungeons and Dragons";
+            $author = "James Brown";
+            $test_book = new Book($title, $author);
+            $test_book->save();
+
+            $title2 = "Antechrist";
+            $author2 = "Amelie Notomb";
+            $test_book2 = new Book($title2, $author2);
+            $test_book2->save();
+
+            //Act
+            $test_book->delete();
+            $result = Book::getAll();
+
+            //Assert
+            $this->assertEquals($test_book2, $result[0]);
+
+        }
 
 
 
