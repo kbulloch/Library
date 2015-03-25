@@ -52,6 +52,10 @@
         return $app['twig']->render('librarian_home.twig', array('books' => Book::getAll(), 'clients' => Client::getAll() ));
     });
 
+    $app->get("/client", function() use ($app) {
+        return $app['twig']->render('client_home.twig',  array('books' => Book::getAll()));
+    });
+
     return $app;
 
  ?>

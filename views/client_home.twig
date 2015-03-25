@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Client</title>
+    </head>
+    <body>
+        {% if books is not empty %}
+        <h1>List of all Books:</h1>
+            {% for book in books %}
+                <ul>
+                    <li>{{ book.getTitle }}</li>
+                </ul>
+            {% endfor %}
+        {% else %}
+            <h1>No books yet</h1>
+        {% endif %}
+
+<form action="/find_book" method="post">
+    <label for="title">Enter the title</label>
+    <input name="title" type="text">
+<button type="submit">Search</button>
+</form>
+<p>
+    or
+</p>
+<form action="/find_author" method="post">
+    <label for="author">Enter the author</label>
+    <input name="author" type="text">
+    <button type="submit">Search</button>
+
+</form>
+    </body>
+</html>
