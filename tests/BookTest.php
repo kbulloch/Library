@@ -5,6 +5,7 @@
     * @backupStaticAttributes disabled
     */
 
+    require_once "src/Author.php";
     require_once "src/Book.php";
 
     $DB = new PDO('pgsql:host=localhost;dbname=library_test');

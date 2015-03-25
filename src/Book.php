@@ -81,8 +81,8 @@
 
         function getAuthors()
         {
-            $statement = $GLOBALS['DB']->query("SELECT authors.* FROM books JOIN
-                                                books_authors ON (books.id = books_authors.book_id)
+            $statement = $GLOBALS['DB']->query("SELECT authors.* FROM books
+                                                JOIN books_authors ON (books.id = books_authors.book_id)
                                                 JOIN authors ON (authors.id = books_authors.author_id)
                                                 WHERE books.id = {$this->getId()};");
             $returned_authors = $statement->fetchAll(PDO::FETCH_ASSOC);
