@@ -3,6 +3,50 @@
     <title>Librarian Home</title>
 </head>
 <body>
-    something
+
+    <form action="/books" method="post">
+        <label for="title">Enter book title</label>
+        <input type="text" name="title">
+        <label for="author">Enter author</label>
+        <input type="text" name="author">
+        <button type="submit">Create!</button>
+    </form>
+
+    <form action="/clients" method="post">
+        <label for="name">Enter client name</label>
+        <input type="text" name="name">
+        <button type="submit">Create!</button>
+    </form>
+
+    {% if books is not empty %}
+    <h1>List of all Books:</h1>
+        {% for book in books %}
+            <ul>
+                <li>{{ book.getTitle }}</li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h1>No books yet</h1>
+    {% endif %}
+
+    <form action="/delete_all_books" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit">Delete All Books</button>
+    </form>
+
+    {% if clients is not empty %}
+    <h1>List of all Clients:</h1>
+        {% for client in clients %}
+            <ul>
+                <li>{{ client.getName }}</li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h1>No clients yet</h1>
+    {% endif %}
+    <form action="/delete_all_clients" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit">Delete All Clients</button>
+    </form>
 </body>
 </html>
