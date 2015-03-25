@@ -20,8 +20,7 @@
         {
             //Arrange
             $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
+            $test_book = new Book($title);
 
             //Act
             $result = $test_book->getTitle();
@@ -34,8 +33,7 @@
         {
             //Arrange
             $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
+            $test_book = new Book($title);
             $new_title = "Dragons";
 
             //Act
@@ -46,43 +44,12 @@
             $this->assertEquals($new_title, $result);
         }
 
-        function testGetAuthor()
-        {
-            //Arrange
-            $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
-
-            //Act
-            $result = $test_book->getAuthor();
-
-            //Assert
-            $this->assertEquals($author, $result);
-        }
-
-        function testSetAuthor()
-        {
-            //Arrange
-            $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
-            $new_author = "Dragons";
-
-            //Act
-            $test_book->setAuthor($new_author);
-            $result = $test_book->getAuthor();
-
-            //Assert
-            $this->assertEquals($new_author, $result);
-        }
-
         function testGetId()
         {
             //Arrange
             $title = "Dungeons and Dragons";
-            $author = "James Brown";
             $id = 11;
-            $test_book = new Book($title, $author, $id);
+            $test_book = new Book($title, $id);
 
             //Act
             $result = $test_book->getId();
@@ -95,9 +62,8 @@
         {
             //Arrange
             $title = "Dungeons and Dragons";
-            $author = "James Brown";
             $id = 11;
-            $test_book = new Book($title, $author, $id);
+            $test_book = new Book($title, $id);
             $new_id = 22;
 
             //Act
@@ -112,8 +78,7 @@
         {
             //Arrange
             $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
+            $test_book = new Book($title);
             $test_book->save();
 
             //Act
@@ -127,13 +92,11 @@
         {
             //Arrange
             $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
+            $test_book = new Book($title);
             $test_book->save();
 
             $title2 = "Antechrist";
-            $author2 = "Amelie Notomb";
-            $test_book2 = new Book($title2, $author2);
+            $test_book2 = new Book($title2);
             $test_book2->save();
 
             //Act
@@ -144,53 +107,32 @@
             $this->assertEquals([], $result);
         }
 
-        function testUpdateTitle()
+        function testUpdate()
         {
             //Arrange
             $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
+            $test_book = new Book($title);
             $test_book->save();
 
             $new_title = "Experiments in Murder";
 
             //Act
-            $test_book->updateTitle($new_title);
+            $test_book->update($new_title);
 
             //Assert
             $result = $test_book->getTitle();
             $this->assertEquals($new_title, $result);
         }
 
-        function testUpdateAuthor()
-        {
-            //Arrange
-            $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
-            $test_book->save();
-
-            $new_author = "Francis Bacon";
-
-            //Act
-            $test_book->updateAuthor($new_author);
-
-            //Assert
-            $result = $test_book->getAuthor();
-            $this->assertEquals($new_author, $result);
-        }
-
         function testFind()
         {
             //Arrange
             $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
+            $test_book = new Book($title);
             $test_book->save();
 
             $title2 = "Antechrist";
-            $author2 = "Amelie Notomb";
-            $test_book2 = new Book($title2, $author2);
+            $test_book2 = new Book($title2);
             $test_book2->save();
 
             //Act
@@ -206,13 +148,12 @@
         {
             //Arrange
             $title = "Dungeons and Dragons";
-            $author = "James Brown";
-            $test_book = new Book($title, $author);
+
+            $test_book = new Book($title);
             $test_book->save();
 
             $title2 = "Antechrist";
-            $author2 = "Amelie Notomb";
-            $test_book2 = new Book($title2, $author2);
+            $test_book2 = new Book($title2);
             $test_book2->save();
 
             //Act
