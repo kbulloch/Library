@@ -148,7 +148,6 @@
         {
             //Arrange
             $title = "Dungeons and Dragons";
-
             $test_book = new Book($title);
             $test_book->save();
 
@@ -163,6 +162,50 @@
             //Assert
             $this->assertEquals($test_book2, $result[0]);
 
+        }
+
+        function testGetAuthors()
+        {
+            //Arrange
+            $title = "Dungeons and Dragons";
+            $test_book = new Book($title);
+            $test_book->save();
+
+            $author_name = "Francis Bacon";
+            $test_author = new Author($author_name);
+            $test_author->save();
+
+            $author_name2 = "Mike";
+            $test_author2 = new Author($author_name2);
+            $test_author2->save();
+
+            $test_book->addAuthor($test_author);
+            $test_book->addAuthor($test_author2);
+
+            //Act
+            $result = $test_book->getAuthors();
+
+            //Assert
+            $this->assertEquals([$test_author, $test_author2], $result);
+        }
+
+        function testAddAuthor()
+        {
+            //Arrange
+            $title = "Dungeons and Dragons";
+            $test_book = new Book($title);
+            $test_book->save();
+
+            $author_name = "Francis Bacon";
+            $test_author = new Author($author_name);
+            $test_author->save();
+
+            //Act
+            $test_book->addAuthor($test_author);
+
+            //Assert
+            $result = $test_book->getAuthors();
+            $this->assertEquals($test_author, $result[0]);
         }
 
 

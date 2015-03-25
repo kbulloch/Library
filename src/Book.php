@@ -78,5 +78,24 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM books WHERE id = {$this->getId()};");
         }
+
+        function getAuthors()
+        {
+            $statement = $GLOBALS['DB']->query("SELECT authors.* FROM authors JOIN
+                                                books_authors ON (books.id = books_authors.book_id)
+                                                join authors ON (authors.id = books_authors.author_id)
+                                        WHERE books.id = {$this->getId()};");
+            var_dump($statement);
+            //above returns sql info
+            //use author id's to get author objects from database/table
+            //use author object to get names
+
+
+        }
+
+        function addAuthor($new_author)
+        {
+
+        }
     }
  ?>
