@@ -81,21 +81,24 @@
 
         function getAuthors()
         {
-            $statement = $GLOBALS['DB']->query("SELECT authors.* FROM authors JOIN
+            $statement = $GLOBALS['DB']->query("SELECT authors.* FROM books JOIN
                                                 books_authors ON (books.id = books_authors.book_id)
-                                                join authors ON (authors.id = books_authors.author_id)
-                                        WHERE books.id = {$this->getId()};");
-            var_dump($statement);
-            //above returns sql info
-            //use author id's to get author objects from database/table
-            //use author object to get names
-
-
+                                                JOIN authors ON (authors.id = books_authors.author_id)
+                                                WHERE books.id = {$this->getId()};");
+            $returned_authors = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $authors = [];
+            foreach ($returned_authors as $author) {
+                $name = $author['name'];
+                $id = $author['id'];
+                $new_author = new Author($name, $id);
+                array_push($authors, $new_author);
+            }
+            return $authors;
         }
 
         function addAuthor($new_author)
         {
-
+            $GLOBALS['DB']->exec("INSERT INTO books_authors (book_id, author_id) VALUES ({$this->getId()}, {$new_author->getId()});");
         }
     }
  ?>
