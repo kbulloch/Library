@@ -11,7 +11,7 @@
     $DB = new PDO('pgsql:host=localhost;dbname=library');
 
     $app = new Silex\Application();
-    $app['debug']=true;
+    // $app['debug']=true;
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__."/../views"));
 
     use Symfony\Component\HttpFoundation\Request;
@@ -54,12 +54,32 @@
         return $app['twig']->render('librarian_home.twig', array('books' => Book::getAll(), 'clients' => Client::getAll() ));
     });
 
-    $app->get("/client", function() use ($app) {
-        $name = "Rob"; //can create a form for this later
-        $new_client = new Client($name);
-        $new_client->save();
+    $app->get("/log_in", function() use ($app) {
+        return $app['twig']->render('log_in_client.twig');
+    });
+
+    $app->post("/client", function() use ($app) {
+        $name = $_POST['name'];
+        $id = $_POST['id'];
+        $checked_client = Client::find($id);
+        $error = "Try with another id.";
+        if ($checked_client == null) {
+            $client = new Client($name, $id);
+            $client->save();
+            //var_dump($client);
+        }
+        elseif ($name == $checked_client->getName()) {
+                $client = Client::find($id);
+        }
+        else {
+            echo $error;
+            return $app['twig']->render('log_in_client.twig');
+
+        }
+
+
         $books = Book::getAll();
-        return $app['twig']->render('client_home.twig',  array('books' => $books, 'client' => $new_client));
+        return $app['twig']->render('client_home.twig',  array('books' => $books, 'client' => $client));
     });
 
     $app->post("/find_book", function() use ($app) {
@@ -84,7 +104,10 @@
         $book = Book::find($book_id);
         $authors = $book->getAuthors();
         $client = Client::find($client_id);
-        return $app['twig']->render('about_book.twig', array('book' => $book, 'authors' => $authors, 'client' => $client));
+        $book_title = $book->getTitle();
+        $total = Copie::countCopies($book_title);
+        $on_shelf = Copie::countOnShelf($book_title);
+        return $app['twig']->render('about_book.twig', array('on_shelf' => $on_shelf, 'total' => $total, 'book' => $book, 'authors' => $authors, 'client' => $client));
     });
 
     $app->get("/{client_id}/rent/{book_id}", function($client_id, $book_id) use ($app) {

@@ -33,9 +33,10 @@
 
         function save()
         {
-            $statement = $GLOBALS['DB']->query("INSERT INTO clients (name) VALUES ('{$this->getName()}') RETURNING id;");
+            $statement = $GLOBALS['DB']->query("INSERT INTO clients (name, id)
+                                                VALUES ('{$this->getName()}', {$this->getId()});");
             $result = $statement->fetch(PDO::FETCH_ASSOC);
-            $this->setId($result['id']);
+            // $this->setId($result['id']);
         }
 
         static function getAll()
@@ -66,12 +67,28 @@
         //if there are problems look here
         static function find($search_id)
         {
-            $statement = $GLOBALS['DB']->query("SELECT * FROM clients WHERE id = {$search_id};");
-            $returned_client = $statement->fetch(PDO::FETCH_ASSOC);
-            $name = $returned_client['name'];
-            $id = $returned_client['id'];
-            $found_client = new Client($name, $id);
+            $found_client = null;
+            $all_clients = Client::getAll();
+
+            foreach($all_clients as $client){
+                $client_id = $client->getId();
+                if ($client_id == $search_id){
+                    $found_client = $client;
+                }
+            }
             return $found_client;
+
+
+
+
+            // $found_client = null;
+            // $statement = $GLOBALS['DB']->query("SELECT * FROM clients WHERE id = {$search_id};");
+            // $returned_client = $statement->fetch(PDO::FETCH_ASSOC);
+            // var_dump($returned_client);
+            // $name = $returned_client['name'];
+            // $id = $returned_client['id'];
+            // $found_client = new Client($name, $id);
+            // return $found_client;
         }
 
         function delete()

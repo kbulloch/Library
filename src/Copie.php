@@ -112,7 +112,6 @@ class Copie
             $number_rented = 0;
             $books = Book::findMultiTitle($search_book_title);
             $checkouts = Checkout::getAll();
-            var_dump($checkouts);
             foreach ($books as $book) {
                 $book_id = $book->getId();
 
@@ -124,8 +123,6 @@ class Copie
                 }
             }
             $total = Copie::countCopies($search_book_title);
-            var_dump($total);
-            var_dump($number_rented);
             $on_shelf = $total - $number_rented;
             return $on_shelf;
         }

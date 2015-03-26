@@ -9,6 +9,8 @@
         Written by:
         <h2> {{ author.getName }}</h2>
         {% endfor %}
+        <h2>Total of Copies : {{ total }}</h2>
+        <h2>Available one : {{ on_shelf }}</h2>
 
         <form action="/{{ client.getId }}/rent/{{ book.getId }}">
             <button type="submit">Rent it</button>
