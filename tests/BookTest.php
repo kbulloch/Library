@@ -211,6 +211,26 @@
         }
 
 
+        function testFindTitle()
+        {
+            //Arrange
+            $title = "Dungeons and Dragons";
+            $test_book = new Book($title);
+            $test_book->save();
+
+            $title2 = "Antechrist";
+            $test_book2 = new Book($title2);
+            $test_book2->save();
+
+
+            //Act
+            $found_book = Book::findTitle($title);
+            $result = $found_book->getTitle();
+
+            //Assert
+            $this->assertEquals($title, $result);
+
+        }
 
 
 

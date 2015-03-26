@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Found book</title>
+    </head>
+    <body>
+        <h1>Found Book :</h1>
+        {% if book is not empty %}
+
+        <p>
+            {{ book.getTitle }}
+        </p>
+
+        {% else %}
+        <p>
+            Sorry, the book you're looking for is not listed in our database.
+        </p>
+
+        {% endif %}
+        <a href="/client">Return</a>
+
+    </body>
+</html>

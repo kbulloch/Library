@@ -6,31 +6,33 @@
     </head>
     <body>
         <div class="container">
-        <h1>List of all Books:</h1>
-        {% if books is not empty %}
-            {% for book in books %}
-                <ul>
-                    <li>{{ book.getTitle }}</li>
-                </ul>
-            {% endfor %}
-        {% else %}
-            <h1>No books yet</h1>
-        {% endif %}
 
-<form action="/find_book" method="post">
-    <label for="title">Enter the title</label>
-    <input name="title" type="text">
-<button type="submit">Search</button>
-</form>
-<p>
-    or
-</p>
-<form action="/find_author" method="post">
-    <label for="author">Enter the author</label>
-    <input name="author" type="text">
-    <button type="submit">Search</button>
+            <h1>List of all Books:</h1>
+            {% if books is not empty %}
+                {% for book in books %}
+                    <ul>
+                        <li><a href="/about/{{ book.getId }}">{{ book.getTitle }}</a></li>
+                    </ul>
+                {% endfor %}
+            {% else %}
+                <h3>No books yet</h3>
+            {% endif %}
 
-</form>
-</div>
+            <div class="float right" style="float: right; border: dotted 2px black; padding: 10px">
+                <form action="/find_book" method="post">
+                    <label for="title">Search by title</label>
+                    <input name="title" type="text">
+                <button type="submit">Search</button>
+                </form>
+                <p>
+                    or
+                </p>
+                <form action="/find_author" method="post">
+                    <label for="author">Search by author</label>
+                    <input name="author" type="text">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

@@ -53,8 +53,36 @@
     });
 
     $app->get("/client", function() use ($app) {
-        return $app['twig']->render('client_home.twig',  array('books' => Book::getAll()));
+        $books = Book::getAll();
+        return $app['twig']->render('client_home.twig',  array('books' => $books));
     });
+
+    $app->post("/find_book", function() use ($app) {
+        $new_title = $_POST['title'];
+        $the_book = Book::findTitle($new_title);
+        var_dump($the_book);
+        return $app['twig']->render('found_book.twig', array('book' => $the_book));
+
+    });
+
+    $app->post("/find_author", function() use ($app) {
+        $new_name = $_POST['author'];
+        $the_author = Author::findName($new_name);
+        if($the_author != null) {
+            $books = $the_author->getBooks();
+        } else {
+            $books = null;
+        }
+        return $app['twig']->render('found_author.twig', array('books' => $books, 'author' => $the_author));
+    });
+
+    $app->get("/about/{id}", function($id) use ($app) {
+        $book = Book::find($id);
+        $authors = $book->getAuthors();
+        return $app['twig']->render('about_book.twig', array('book' => $book, 'authors' => $authors));
+
+    });
+
 
     return $app;
 

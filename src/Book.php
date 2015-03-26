@@ -74,6 +74,19 @@
             return $found_book;
         }
 
+        static function findTitle($search_title)
+        {
+            $found_book = null;
+            $all_books = Book::getAll();
+            foreach($all_books as $book){
+                $book_title = $book->getTitle();
+                if ($book_title == $search_title){
+                    $found_book = $book;
+                }
+            }
+            return $found_book;
+        }
+
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM books WHERE id = {$this->getId()};");

@@ -75,6 +75,19 @@
             return $found_author;
         }
 
+        static function findName($search_name)
+        {
+            $found_author = null;
+            $all_authors = Author::getAll();
+            foreach($all_authors as $author) {
+                $author_name = $author->getName();
+                if ($author_name == $search_name) {
+                    $found_author = $author;
+                }
+            }
+            return $found_author;
+        }
+
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM authors WHERE id = {$this->getId()};");

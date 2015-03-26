@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Found Author</title>
+    </head>
+    <body>
+        <h1>Found Books by author : {{ author.getName }}</h1>
+        {% if books is not empty %}
+
+        {% for book in books %}
+        <p>
+            {{ book.getTitle }}
+        </p>
+
+        {% endfor %}
+        {% else %}
+        <p>
+            Sorry, the author you're looking for is not listed in our database.
+        </p>
+
+        {% endif %}
+
+        <a href="/client">Return</a>
+    </body>
+</html>
