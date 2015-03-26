@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>History of the client</title>
+    </head>
+    <body>
+        <h1>Here is the history of {{ client.getName }} :</h1>
+        <p>
+
+            <ul style="float: left">
+                {% for element in books %}
+
+                <li><a href="/{{ client.getId }}/about/{{ element.getId }}">Title: {{ element.getTitle }}</a></li>
+                {% endfor %}
+
+
+           </ul>
+
+
+              <ul style="float: left">
+                  {% for history in histories %}
+
+               <li>Due Date : {{ history.getDueDate }}</li>
+               {% endfor %}
+
+           </ul>
+
+        </p>
+    </body>
+</html>

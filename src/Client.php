@@ -98,10 +98,8 @@
 
         function getHistory() //needs to be edited
         {
-            $statement = $GLOBALS['DB']->query("SELECT checkouts.* FROM clients
-                                                JOIN books ON (books.id = checkouts.book_id)
-                                                JOIN clients ON (clients.id = checkouts.client_id)
-                                                WHERE clients.id = {$this->getId()};");
+            $statement = $GLOBALS['DB']->query("SELECT * FROM checkouts
+                                                WHERE client_id = {$this->getId()};");
             $returned_checkouts = $statement->fetchAll(PDO::FETCH_ASSOC);
             $checkouts = [];
             foreach ($returned_checkouts as $checkout) {
@@ -109,7 +107,7 @@
                 $book_id = $checkout['book_id'];
                 $client_id = $checkout['client_id'];
                 $id = $checkout['id'];
-                $new_checkout = new Checkout($due_date, $book_id, $client_id, $id);
+                $new_checkout = new Checkout($client_id, $due_date, $book_id, $id);
                 array_push($checkouts, $new_checkout);
             }
             return $checkouts;

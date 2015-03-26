@@ -74,10 +74,7 @@
         else {
             echo $error;
             return $app['twig']->render('log_in_client.twig');
-
         }
-
-
         $books = Book::getAll();
         return $app['twig']->render('client_home.twig',  array('books' => $books, 'client' => $client));
     });
@@ -119,6 +116,18 @@
         $checkout->save();
         return $app['twig']->render('rent_success.twig', array('client' => $client, 'due_date' => $due_date, 'book' => $book));
     });
+
+    $app->get("/history_client/{client_id}", function($client_id) use ($app) {
+        $client = Client::find($client_id);
+        $history = $client->getHistory();
+        $books = [];
+        foreach($history as $element){
+            $book = Book::find($element->getBookId());
+            array_push($books, $book);
+        }
+        return $app['twig']->render('history_client.twig', array('histories' => $history, 'client' => $client, 'books' => $books));
+    });
+
 
 
     return $app;

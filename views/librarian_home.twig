@@ -42,7 +42,7 @@
         <h1>List of all Clients:</h1>
             {% for client in clients %}
                 <ul>
-                    <li>{{ client.getName }}</li>
+                    <li><a href="/history_client/{{ client.getId }}">{{ client.getName }}</a></li>
                 </ul>
             {% endfor %}
         {% else %}
