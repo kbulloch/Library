@@ -1,10 +1,13 @@
 <html>
     <head>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+
         <title>Client</title>
     </head>
     <body>
-        {% if books is not empty %}
+        <div class="container">
         <h1>List of all Books:</h1>
+        {% if books is not empty %}
             {% for book in books %}
                 <ul>
                     <li>{{ book.getTitle }}</li>
@@ -28,5 +31,6 @@
     <button type="submit">Search</button>
 
 </form>
+</div>
     </body>
 </html>
