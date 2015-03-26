@@ -5,9 +5,12 @@
     <body>
         <h1>About {{ book.getTitle }} :</h1>
 
+        {% for author in authors %}
+        Written by:
         <h2> {{ author.getName }}</h2>
-        <!-- <h3> {{ number of copy }}</h3> -->
-        <form action="/rent">
+        {% endfor %}
+
+        <form action="/{{ client.getId }}/rent/{{ book.getId }}">
             <button type="submit">Rent it</button>
         </form>
     </body>

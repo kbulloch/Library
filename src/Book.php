@@ -74,14 +74,29 @@
             return $found_book;
         }
 
-        static function findTitle($search_title)
+        static function findSingleTitle($search_title)
         {
             $found_book = null;
             $all_books = Book::getAll();
+
             foreach($all_books as $book){
                 $book_title = $book->getTitle();
                 if ($book_title == $search_title){
                     $found_book = $book;
+                }
+            }
+            return $found_book;
+        }
+
+        static function findMultiTitle($search_title)
+        {
+            $found_book = [];
+            $all_books = Book::getAll();
+
+            foreach($all_books as $book){
+                $book_title = $book->getTitle();
+                if ($book_title == $search_title){
+                    array_push($found_book, $book);
                 }
             }
             return $found_book;

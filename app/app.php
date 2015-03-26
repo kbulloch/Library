@@ -5,11 +5,13 @@
     require_once __DIR__."/../src/Author.php";
     require_once __DIR__."/../src/Client.php";
     require_once __DIR__."/../src/Copie.php";
+    require_once __DIR__."/../src/Checkout.php";
+
 
     $DB = new PDO('pgsql:host=localhost;dbname=library');
 
     $app = new Silex\Application();
-
+    $app['debug']=true;
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__."/../views"));
 
     use Symfony\Component\HttpFoundation\Request;
@@ -53,14 +55,16 @@
     });
 
     $app->get("/client", function() use ($app) {
+        $name = "Rob"; //can create a form for this later
+        $new_client = new Client($name);
+        $new_client->save();
         $books = Book::getAll();
-        return $app['twig']->render('client_home.twig',  array('books' => $books));
+        return $app['twig']->render('client_home.twig',  array('books' => $books, 'client' => $new_client));
     });
 
     $app->post("/find_book", function() use ($app) {
         $new_title = $_POST['title'];
         $the_book = Book::findTitle($new_title);
-        var_dump($the_book);
         return $app['twig']->render('found_book.twig', array('book' => $the_book));
 
     });
@@ -76,11 +80,21 @@
         return $app['twig']->render('found_author.twig', array('books' => $books, 'author' => $the_author));
     });
 
-    $app->get("/about/{id}", function($id) use ($app) {
-        $book = Book::find($id);
+    $app->get("/{client_id}/about/{book_id}", function($client_id, $book_id) use ($app) {
+        $book = Book::find($book_id);
         $authors = $book->getAuthors();
-        return $app['twig']->render('about_book.twig', array('book' => $book, 'authors' => $authors));
+        $client = Client::find($client_id);
+        return $app['twig']->render('about_book.twig', array('book' => $book, 'authors' => $authors, 'client' => $client));
+    });
 
+    $app->get("/{client_id}/rent/{book_id}", function($client_id, $book_id) use ($app) {
+        //$client_id, $due_date, $book_id, $id = null
+        $book = Book::find($book_id);
+        $due_date = "Tomorrow";
+        $client = Client::find($client_id);
+        $checkout = new Checkout($client_id, $due_date, $book_id);
+        $checkout->save();
+        return $app['twig']->render('rent_success.twig', array('client' => $client, 'due_date' => $due_date, 'book' => $book));
     });
 
 

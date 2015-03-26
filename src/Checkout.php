@@ -73,7 +73,7 @@ class Checkout {
             $id = $a_checkout['id'];
             $book_id = $a_checkout['book_id'];
             $due_date = $a_checkout['due_date'];
-            $new_checkout = new Checkout($client_id, $book_id, $due_date, $id);
+            $new_checkout = new Checkout($client_id, $due_date, $book_id, $id);
             array_push($checkouts, $new_checkout);
         }
         return $checkouts;

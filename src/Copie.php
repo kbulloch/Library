@@ -36,7 +36,7 @@ class Copie
       function setTotal($new_total)
       {
           $this->total = (int) $new_total;
-      }   
+      }
       function getTotal()
       {
         return $this->total;
@@ -90,6 +90,48 @@ class Copie
 //              }
 //              return $found_task;
 //          }
+    //
+    // $search_title = $book->getTitle();
+    // $num_copies = Copie::countCopies($search_title);
+
+        static function countCopies($search_title)
+        {
+            $number = 0;
+            $books = Book::getAll();
+            foreach ($books as $book) {
+                $book_title = $book->getTitle();
+                    if ($book_title == $search_title) {
+                        $number++;
+                    }
+                }
+            return $number;
+        }
+
+        static function countOnShelf($search_book_title)
+        {
+            $number_rented = 0;
+            $books = Book::findMultiTitle($search_book_title);
+            $checkouts = Checkout::getAll();
+            var_dump($checkouts);
+            foreach ($books as $book) {
+                $book_id = $book->getId();
+
+                foreach($checkouts as $checkout) {
+                    $book_id_checkout = $checkout->getBookId();
+                    if ($book_id_checkout == $book_id) {
+                        $number_rented++;
+                    }
+                }
+            }
+            $total = Copie::countCopies($search_book_title);
+            var_dump($total);
+            var_dump($number_rented);
+            $on_shelf = $total - $number_rented;
+            return $on_shelf;
+        }
+
     }
+
+
 
     ?>

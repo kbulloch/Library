@@ -7,6 +7,9 @@
 
     require_once "src/Author.php";
     require_once "src/Book.php";
+    require_once "src/Copie.php";
+
+    require_once "src/Checkout.php";
 
     $DB = new PDO('pgsql:host=localhost;dbname=library_test');
 
@@ -224,7 +227,7 @@
 
 
             //Act
-            $found_book = Book::findTitle($title);
+            $found_book = Book::findSingleTitle($title);
             $result = $found_book->getTitle();
 
             //Assert
@@ -232,8 +235,51 @@
 
         }
 
+        function testCountCopies()
+        {
+            //Arrange
+            $title = "Dungeons and Dragons";
+            $test_book = new Book($title);
+            $test_book->save();
+
+            $title2 = "Dungeons and Dragons";
+            $test_book2 = new Book($title2);
+            $test_book2->save();
 
 
+            //Act
+            $search_title = $test_book->getTitle();
+            $result = Copie::countCopies($search_title);
+
+            //Assert
+            $this->assertEquals(2, $result);
+        }
+
+
+        function testOnShelf()
+        {
+            //Arrange
+            $title = "Dungeons and Dragons";
+            $test_book = new Book($title);
+            $test_book->save();
+
+            $title2 = "Dungeons and Dragons";
+            $test_book2 = new Book($title2);
+            $test_book2->save();
+
+            $due_date = "Tomorrow";
+            $client_id = 3;
+            $book_id = $test_book->getId();
+            $checkout = new Checkout($client_id, $due_date, $book_id);
+            $checkout->save();
+
+            $book_title = $test_book->getTitle();
+            $result = Copie::countOnShelf($book_title);
+
+
+            //Assert
+            $this->assertEquals(1, $result);
+        }
 
 
 
