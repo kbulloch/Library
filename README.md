@@ -26,9 +26,17 @@ postgres
 (then in a new tab)
 ```
 psql
+CREATE DATABASE library;
+\c library;
+CREATE TABLE books (id serial PRIMARY KEY, title varchar);
+CREATE TABLE authors (id serial PRIMARY KEY, name varchar);
+CREATE TABLE books_authors (id serial PRIMARY KEY, book_id int, author_id int);
+CREATE TABLE clients (id serial PRIMARY KEY, name varchar);
+CREATE TABLE copies (id serial PRIMARY KEY, book_id int, total int, on_shelf int);
+CREATE TABLE checkouts (id serial PRIMARY KEY, client_id int, due_date varchar, book_id int);
+CREATE DATABASE library_test WITH TEMPLATE library;
+\c library_test;
 ```
-Then copy and paste the commands found in database.txt to build the database.
-
 You should now be able to open a browser and point it to localhost:8000 to
 see the Library.
 
